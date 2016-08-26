@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style type="text/css">
+div {
+    display: inline-block;
+}
+
+.bar {
+    height: 150px;
+    width: 50px;
+    background: blue;
+    margin-left: 5px;
+}
+
+.bar:hover {
+    background: #ccc;
+}
+
+</style>
+
+<body>
+</body>
+<script src="dist/d3.min.js"></script>
+<script>
+/*使用SVG*/
+/*首先append一个svg元素*/
+var svg = d3.select('body').append('svg');
+console.log(svg);
+svg.attr('height', 500).attr('width', 500);
+// 定义数据
+var dataset = [5, 10, 15, 20, 25];
+
+svg.selectAll("circle")
+    .data(dataset)
+    .enter()
+    .append('circle')
+    .attr('cx', function(d, i) {
+        return 20 * Math.random() * d;
+    })
+    .attr('cy', function(d, i) {
+        return 20 * Math.random() * d;
+    })
+    .attr('r', 50)
+    .style('fill', '#CCC');
+var w = 500;
+var h = 100;
+var barPadding = 1;
+
+svg.selectAll("rect").data(dataset).enter().append('rect')
+    .attr('x', function(d, i) {
+        return i * (w / dataset.length);
+    })
+    .attr('y', function(d) {
+        return h - d * 5;
+    })
+    .attr('width', w / dataset.length - barPadding)
+    .attr('height', function(d) {
+        return d * 5;
+    })
+    .attr('rx', 0)
+    .attr('ry', 0)
+    .style('fill', function(d) {
+        return 'rgb(0,0,' + d * 10 + ')';
+    });
+svg.selectAll("text").data(dataset).enter()
+    .append("text")
+    .text(function(d){
+        return d;
+    })
+    .attr('x', function(d,i){
+        return i*(w/dataset.length)+5;
+    })
+    .attr('y',function(d){
+        return h-d*4+15;
+    }).style('fill', 'rgb(255,255,255)')
+    // .attr({
+    //     x:function(d,i){return i*(w/dataset.length);},
+    //     y:function(d){return h-d*5+5;}
+    // })
+</script>
