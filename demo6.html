@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.active {
+    stroke: #000;
+    stroke-width: 2px;
+}
+</style>
+<svg width="960" height="500"></svg>
+<script src="dist/d3.min.js"></script>
+<script>
+/*需求：屏幕下方有四个点，分别代表四个算子
+点击任意小球，即可在屏幕生成小球*/
+var svg = d3.select("svg");
+
+function dragmove(d) {
+    d3.select(this)
+        .attr("cx", d.cx = d3.event.x)
+        .attr("cy", d.cy = d3.event.y);
+}
+var circles = [{
+    cx: 150,
+    cy: 400,
+    r: 30,
+    color:'blue',
+    info:'算子一'
+}, {
+    cx: 250,
+    cy: 400,
+    r: 30,
+    color:'red',
+    info:'算子二'
+}, {
+    cx: 350,
+    cy: 400,
+    r: 30,
+    color:'green',
+    info:'算子三'
+} ];
+
+svg.selectAll("circle")
+    .data(circles)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d) {
+        return d.cx;
+    })
+    .attr("cy", function(d) {
+        return d.cy;
+    })
+    .attr("r", function(d) {
+        return d.r;
+    })
+    .attr("fill",function(d){
+        return d.color
+    })
+    .call(d3.drag()
+        .on("drag", dragmove));
+ //这里是刚才定义的drag行为
+</script>
