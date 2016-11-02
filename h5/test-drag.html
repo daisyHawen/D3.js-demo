@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <style type="text/css">
+    #div1 {
+        width: 488px;
+        height: 70px;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+    }
+    #div2{
+    	width: 488px;
+        height: 70px;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+    }
+    </style>
+    <script type="text/javascript">
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("Img", ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("Img");
+        ev.target.appendChild(document.getElementById(data));
+    }
+    </script>
+</head>
+
+<body>
+    <p>拖动测试：</p>
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br/>
+    <img id="drag1" src="./img/1.png" draggable="true" ondragstart="drag(event)" />
+    <img id="drag2" src="./img/2.png" draggable="true" ondragstart="drag(event)" />
+
+</body>
+
+</html>

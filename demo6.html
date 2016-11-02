@@ -22,22 +22,52 @@ var circles = [{
     cx: 150,
     cy: 400,
     r: 30,
-    color:'blue',
-    info:'算子一'
+    color: 'blue',
+    info: '算子一'
 }, {
     cx: 250,
     cy: 400,
     r: 30,
-    color:'red',
-    info:'算子二'
+    color: 'red',
+    info: '算子二'
 }, {
     cx: 350,
     cy: 400,
     r: 30,
-    color:'green',
-    info:'算子三'
-} ];
+    color: 'green',
+    info: '算子三'
+}];
+var append_circles = [];
 
+function createNewCircle(color) {
+    // var x;
+    console.log(color);
+    var circle = {
+        cx: 150 + Math.floor(Math.random() * 50),
+        cy: 200 + Math.floor(Math.random() * 50),
+        r: 20,
+        color: color
+    };
+    append_circles.push(circle)
+    console.log(append_circles);
+    svg.selectAll("circles").data(append_circles).enter().append('circle')
+        .attr('cx', function(d) {
+            return d.cx;
+        })
+        .attr('cy', function(d) {
+            return d.cy;
+        })
+        .attr('r', function(d) {
+            return d.r;
+        }).attr('info', function(d) {
+            return d.info;
+        })
+        .style('fill', function(d) {
+            return d.color
+        }).call(d3.drag()
+            .on("drag", dragmove));
+    append_circles.pop()
+}
 svg.selectAll("circle")
     .data(circles)
     .enter()
@@ -51,10 +81,10 @@ svg.selectAll("circle")
     .attr("r", function(d) {
         return d.r;
     })
-    .attr("fill",function(d){
+    .attr("fill", function(d) {
         return d.color
-    })
-    .call(d3.drag()
-        .on("drag", dragmove));
- //这里是刚才定义的drag行为
+    }).on("click", function(d) {
+        createNewCircle(d.color);
+    });
+//这里是刚才定义的drag行为
 </script>
